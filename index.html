@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gire a Chave - Portal Automotivo Comercial</title>
+    <meta name="description" content="Portal especializado em veículos comerciais, carros, motos, caminhões e ônibus para empresas.">
+    <meta name="keywords" content="veículos comerciais, carros, motos, caminhões, ônibus, frotas, empresas">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .logo-pattern {
+            background-size: 600px 600px;
+            background-repeat: repeat;
+        }
+    </style>
+</head>
+<body class="bg-black text-white logo-pattern min-h-screen" style="background-image: url('4yDi3EoK78ggBX-XvxoPQ'); background-size: 600px 600px; background-repeat: repeat;">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black py-6 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img 
+                    src="2u7ZJHRmz9oBMc-KHnvKV" 
+                    alt="Gire a Chave Logo" 
+                    class="w-16 h-16 object-contain"
+                />
+                <div>
+                    <h1 id="blogTitle" class="text-4xl font-bold">Gire a Chave</h1>
+                    <p id="blogSubtitle" class="text-lg opacity-90">Seu portal automotivo comercial</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <!-- Language Selector -->
+                <div class="flex space-x-2">
+                    <button onclick="changeLanguage('pt')" id="langPt" class="px-3 py-1 rounded-full text-sm font-medium transition-colors bg-black text-yellow-400">
+                        🇧🇷 Português
+                    </button>
+                    <button onclick="changeLanguage('en')" id="langEn" class="px-3 py-1 rounded-full text-sm font-medium transition-colors bg-yellow-500 text-black hover:bg-yellow-600">
+                        🇺🇸 English
+                    </button>
+                    <button onclick="changeLanguage('es')" id="langEs" class="px-3 py-1 rounded-full text-sm font-medium transition-colors bg-yellow-500 text-black hover:bg-yellow-600">
+                        🇪🇸 Español
+                    </button>
+                </div>
+                <!-- Admin Toggle -->
+                <div class="flex items-center space-x-2">
+                    <button id="adminToggle" onclick="toggleAdmin()" class="bg-black text-yellow-400 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+                        Modo Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Categories Filter -->
+        <div class="mb-8">
+            <div class="bg-gray-900 rounded-lg border border-gray-700 p-6">
+                <h2 id="categoriesTitle" class="text-2xl font-bold text-yellow-400 mb-4">Categorias</h2>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="filterCategory('all')" id="catAll" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-yellow-600 text-black">
+                        Todos os Veículos
+                    </button>
+                    <button onclick="filterCategory('carros')" id="catCarros" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-700 text-white hover:bg-gray-600">
+                        Carros
+                    </button>
+                    <button onclick="filterCategory('motos')" id="catMotos" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-700 text-white hover:bg-gray-600">
+                        Motos
+                    </button>
+                    <button onclick="filterCategory('caminhoes')" id="catCaminhoes" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-700 text-white hover:bg-gray-600">
+                        Caminhões
+                    </button>
+                    <button onclick="filterCategory('onibus')" id="catOnibus" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-700 text-white hover:bg-gray-600">
+                        Ônibus
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="mb-8 hidden">
+            <div class="bg-gray-900 rounded-lg border border-gray-700 p-6">
+                <h2 class="text-2xl font-bold text-yellow-400 mb-4">Nova Postagem</h2>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Título (Português)</label>
+                            <input type="text" id="newTitlePt" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Title (English)</label>
+                            <input type="text" id="newTitleEn" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Título (Español)</label>
+                            <input type="text" id="newTitleEs" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Conteúdo (Português)</label>
+                            <textarea id="newContentPt" rows="4" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Content (English)</label>
+                            <textarea id="newContentEn" rows="4" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Contenido (Español)</label>
+                            <textarea id="newContentEs" rows="4" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Categoria</label>
+                            <select id="newCategory" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white">
+                                <option value="carros">Carros</option>
+                                <option value="motos">Motos</option>
+                                <option value="caminhoes">Caminhões</option>
+                                <option value="onibus">Ônibus</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">URL da Imagem</label>
+                            <input type="text" id="newImage" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white" placeholder="https://exemplo.com/imagem.jpg">
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button onclick="addPost()" class="bg-yellow-600 text-black px-6 py-2 rounded-lg hover:bg-yellow-700 transition-colors font-medium">
+                            Salvar
+                        </button>
+                        <button onclick="clearForm()" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Posts Container -->
+        <div id="postsContainer" class="space-y-6">
+            <!-- Posts will be loaded here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="text-center py-12 hidden">
+            <div class="text-6xl mb-4">🚗</div>
+            <p class="text-gray-400 text-lg">Nenhuma postagem encontrada</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img 
+                            src="2u7ZJHRmz9oBMc-KHnvKV" 
+                            alt="Gire a Chave" 
+                            class="w-10 h-10"
+                        />
+                        <h3 id="footerTitle" class="text-xl font-bold text-yellow-400">Gire a Chave</h3>
+                    </div>
+                    <p id="footerDescription" class="text-gray-400">Seu portal especializado em veículos comerciais com as melhores informações do mercado automotivo.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-yellow-400 mb-3">Categorias</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" onclick="filterCategory('carros')" class="hover:text-yellow-400 transition-colors">Carros</a></li>
+                        <li><a href="#" onclick="filterCategory('motos')" class="hover:text-yellow-400 transition-colors">Motos</a></li>
+                        <li><a href="#" onclick="filterCategory('caminhoes')" class="hover:text-yellow-400 transition-colors">Caminhões</a></li>
+                        <li><a href="#" onclick="filterCategory('onibus')" class="hover:text-yellow-400 transition-colors">Ônibus</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-yellow-400 mb-3">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-yellow-400 transition-colors">Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition-colors">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 Gire a Chave. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global state
+        let currentLanguage = 'pt';
+        let selectedCategory = 'all';
+        let isAdmin = false;
+        let posts = [
+            {
+                id: 1,
+                title: {
+                    pt: 'Novos Fiat Cronos 2025: Ideal para Frotas Comerciais',
+                    en: 'New Fiat Cronos 2025: Ideal for Commercial Fleets',
+                    es: 'Nuevo Fiat Cronos 2025: Ideal para Flotas Comerciales'
+                },
+                content: {
+                    pt: 'O Fiat Cronos 2025 chega ao mercado com importantes atualizações que o tornam uma excelente opção para frotas comerciais. Com motor 1.3 Firefly mais eficiente, consumo médio de 15,2 km/l na cidade e 16,8 km/l na estrada, oferece economia real para empresas. O porta-malas de 525 litros e o amplo espaço interno garantem praticidade para uso comercial. Preço sugerido a partir de R$ 89.990 para a versão Drive.',
+                    en: 'The Fiat Cronos 2025 arrives on the market with important updates that make it an excellent option for commercial fleets. With a more efficient 1.3 Firefly engine, average consumption of 15.2 km/l in the city and 16.8 km/l on the road, it offers real savings for companies. The 525-liter trunk and spacious interior ensure practicality for commercial use. Suggested price from R$ 89,990 for the Drive version.',
+                    es: 'El Fiat Cronos 2025 llega al mercado con importantes actualizaciones que lo convierten en una excelente opción para flotas comerciales. Con motor 1.3 Firefly más eficiente, consumo promedio de 15,2 km/l en ciudad y 16,8 km/l en carretera, ofrece ahorro real para empresas. El maletero de 525 litros y el amplio espacio interior garantizan practicidad para uso comercial. Precio sugerido desde R$ 89.990 para la versión Drive.'
+                },
+                category: 'carros',
+                image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&h=400&fit=crop',
+                date: new Date().toLocaleDateString()
+            }
+        ];
+
+        // Translations
+        const translations = {
+            pt: {
+                title: 'Gire a Chave',
+                subtitle: 'Seu portal automotivo comercial',
+                admin: 'Modo Admin',
+                categories: 'Categorias',
+                allVehicles: 'Todos os Veículos',
+                cars: 'Carros',
+                motorcycles: 'Motos',
+                trucks: 'Caminhões',
+                buses: 'Ônibus'
+            },
+            en: {
+                title: 'Turn the Key',
+                subtitle: 'Your commercial automotive portal',
+                admin: 'Admin Mode',
+                categories: 'Categories',
+                allVehicles: 'All Vehicles',
+                cars: 'Cars',
+                motorcycles: 'Motorcycles',
+                trucks: 'Trucks',
+                buses: 'Buses'
+            },
+            es: {
+                title: 'Gira la Llave',
+                subtitle: 'Tu portal automotriz comercial',
+                admin: 'Modo Admin',
+                categories: 'Categorías',
+                allVehicles: 'Todos los Vehículos',
+                cars: 'Coches',
+                motorcycles: 'Motos',
+                trucks: 'Camiones',
+                buses: 'Autobuses'
+            }
+        };
+
+        // Language functions
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            updateUI();
+        }
+
+        function updateUI() {
+            const t = translations[currentLanguage];
+            
+            // Update header
+            document.getElementById('blogTitle').textContent = t.title;
+            document.getElementById('blogSubtitle').textContent = t.subtitle;
+            document.getElementById('adminToggle').textContent = t.admin;
+            document.getElementById('categoriesTitle').textContent = t.categories;
+            
+            // Update language buttons
+            document.getElementById('langPt').className = currentLanguage === 'pt' ? 
+                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-black text-yellow-400' :
+                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-yellow-500 text-black hover:bg-yellow-600';
+            
+            document.getElementById('langEn').className = currentLanguage === 'en' ? 
+                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-black text-yellow-400' :
+                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-yellow-500 text-black hover:bg-yellow-600';
+            
+            document.getElementById('langEs').className = currentLanguage === 'es' ? 
+                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-black text-yellow-400' :
+                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-yellow-500 text-black hover:bg-yellow-600';
+            
+            // Update category buttons
+            document.getElementById('catAll').textContent = t.allVehicles;
+            document.getElementById('catCarros').textContent = t.cars;
+            document.getElementById('catMotos').textContent = t.motorcycles;
+            document.getElementById('catCaminhoes').textContent = t.trucks;
+            document.getElementById('catOnibus').textContent = t.buses;
+            
+            // Update footer
+            document.getElementById('footerTitle').textContent = t.title;
+            
+            renderPosts();
+        }
+
+        // Admin functions
+        function toggleAdmin() {
+            isAdmin = !isAdmin;
+            document.getElementById('adminPanel').classList.toggle('hidden', !isAdmin);
+        }
+
+        function addPost() {
+            const newPost = {
+                id: Date.now(),
+                title: {
+                    pt: document.getElementById('newTitlePt').value,
+                    en: document.getElementById('newTitleEn').value,
+                    es: document.getElementById('newTitleEs').value
+                },
+                content: {
+                    pt: document.getElementById('newContentPt').value,
+                    en: document.getElementById('newContentEn').value,
+                    es: document.getElementById('newContentEs').value
+                },
+                category: document.getElementById('newCategory').value,
+                image: document.getElementById('newImage').value || 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&h=400&fit=crop',
+                date: new Date().toLocaleDateString()
+            };
+            
+            posts.unshift(newPost);
+            clearForm();
+            renderPosts();
+        }
+
+        function clearForm() {
+            document.getElementById('newTitlePt').value = '';
+            document.getElementById('newTitleEn').value = '';
+            document.getElementById('newTitleEs').value = '';
+            document.getElementById('newContentPt').value = '';
+            document.getElementById('newContentEn').value = '';
+            document.getElementById('newContentEs').value = '';
+            document.getElementById('newImage').value = '';
+        }
+
+        // Category filter functions
+        function filterCategory(category) {
+            selectedCategory = category;
+            
+            // Update button states
+            const buttons = ['catAll', 'catCarros', 'catMotos', 'catCaminhoes', 'catOnibus'];
+            const categories = ['all', 'carros', 'motos', 'caminhoes', 'onibus'];
+            
+            buttons.forEach((buttonId, index) => {
+                const button = document.getElementById(buttonId);
+                if (categories[index] === category) {
+                    button.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-yellow-600 text-black';
+                } else {
+                    button.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-700 text-white hover:bg-gray-600';
+                }
+            });
+            
+            renderPosts();
+        }
+
+        // Render posts
+        function renderPosts() {
+            const filteredPosts = selectedCategory === 'all' ? posts : posts.filter(post => post.category === selectedCategory);
+            const container = document.getElementById('postsContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (filteredPosts.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            container.innerHTML = filteredPosts.map(post => `
+                <article class="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden hover:border-yellow-400 transition-colors">
+                    <img 
+                        src="${post.image}" 
+                        alt="${post.title[currentLanguage]}" 
+                        class="w-full h-48 object-cover"
+                    />
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-yellow-600 text-black px-3 py-1 rounded-full text-sm font-medium">
+                                ${getCategoryName(post.category)}
+                            </span>
+                            <span class="text-gray-400 text-sm">${post.date}</span>
+                        </div>
+                        <h2 class="text-xl font-bold text-white mb-3 hover:text-yellow-400 transition-colors">
+                            ${post.title[currentLanguage]}
+                        </h2>
+                        <p class="text-gray-300 leading-relaxed">
+                            ${post.content[currentLanguage]}
+                        </p>
+                        ${isAdmin ? `
+                        <div class="mt-4 flex space-x-2">
+                            <button onclick="deletePost(${post.id})" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
+                                Excluir
+                            </button>
+                        </div>
+                        ` : ''}
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function getCategoryName(category) {
+            const categoryNames = {
+                pt: {
+                    carros: 'Carros',
+                    motos: 'Motos', 
+                    caminhoes: 'Caminhões',
+                    onibus: 'Ônibus'
+                },
+                en: {
+                    carros: 'Cars',
+                    motos: 'Motorcycles',
+                    caminhoes: 'Trucks', 
+                    onibus: 'Buses'
+                },
+                es: {
+                    carros: 'Coches',
+                    motos: 'Motos',
+                    caminhoes: 'Camiones',
+                    onibus: 'Autobuses'
+                }
+            };
+            
+            return categoryNames[currentLanguage][category] || category;
+        }
+
+        function deletePost(id) {
+            posts = posts.filter(post => post.id !== id);
+            renderPosts();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUI();
+        });
+    </script>
+</body>
+</html>

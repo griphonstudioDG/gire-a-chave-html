@@ -6,20 +6,107 @@
     <title>Gire a Chave - Portal Automotivo Comercial</title>
     <meta name="description" content="Portal especializado em veículos comerciais, carros, motos, caminhões e ônibus para empresas.">
     <meta name="keywords" content="veículos comerciais, carros, motos, caminhões, ônibus, frotas, empresas">
+    <link rel="icon" type="image/png" href="./images/logos/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .logo-pattern {
-            background-size: 600px 600px;
-            background-repeat: repeat;
+        .gallery-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-main {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gallery-main:hover {
+            transform: scale(1.05);
+        }
+        .gallery-thumbs {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            overflow-x: auto;
+        }
+        .gallery-thumb {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+            flex-shrink: 0;
+        }
+        .gallery-thumb:hover {
+            border-color: #FBBF24;
+        }
+        .gallery-thumb.active {
+            border-color: #F59E0B;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            padding: 12px 16px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        .modal-nav:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .modal-prev {
+            left: 20px;
+        }
+        .modal-next {
+            right: 20px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
         }
     </style>
 </head>
-<body class="bg-black text-white logo-pattern min-h-screen" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=600&fit=crop&auto=format'); background-size: 600px 600px; background-repeat: repeat; opacity: 0.1;">    <!-- Header -->
+<body class="bg-black text-white min-h-screen" style="background-image:/images/imagemblogfundo.png; background-size: 600px 600px; background-repeat: repeat; opacity: 0.95;">
+    <!-- Header -->
     <header class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black py-6 shadow-lg">
         <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center space-x-4">
-               <!-- Logo no header -->
-<img src="./images/Logo1Redesenhado.png" alt="Gire a Chave Logo" class="w-16 h-16 object-contain" />
+                <img 
+                    src="./images/LogoRedesenhado1.png" 
+                    alt="Gire a Chave Logo" 
+                    class="w-16 h-16 object-contain rounded-lg"
+                />
                 <div>
                     <h1 id="blogTitle" class="text-4xl font-bold">Gire a Chave</h1>
                     <p id="blogSubtitle" class="text-lg opacity-90">Seu portal automotivo comercial</p>
@@ -79,6 +166,7 @@
             <div class="bg-gray-900 rounded-lg border border-gray-700 p-6">
                 <h2 class="text-2xl font-bold text-yellow-400 mb-4">Nova Postagem</h2>
                 <div class="space-y-4">
+                    <!-- Títulos -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-2">Título (Português)</label>
@@ -94,6 +182,7 @@
                         </div>
                     </div>
                     
+                    <!-- Conteúdos -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-2">Conteúdo (Português)</label>
@@ -109,28 +198,36 @@
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Categoria</label>
-                            <select id="newCategory" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white">
-                                <option value="carros">Carros</option>
-                                <option value="motos">Motos</option>
-                                <option value="caminhoes">Caminhões</option>
-                                <option value="onibus">Ônibus</option>
-                            </select>
+                    <!-- Categoria -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Categoria</label>
+                        <select id="newCategory" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white max-w-xs">
+                            <option value="carros">Carros</option>
+                            <option value="motos">Motos</option>
+                            <option value="caminhoes">Caminhões</option>
+                            <option value="onibus">Ônibus</option>
+                        </select>
+                    </div>
+                    
+                    <!-- NOVO: 5 Campos de Imagem -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Imagens (até 5)</label>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+                            <input type="text" id="newImage1" placeholder="Imagem 1 (Principal - Obrigatória)" class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm">
+                            <input type="text" id="newImage2" placeholder="Imagem 2 (Opcional)" class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm">
+                            <input type="text" id="newImage3" placeholder="Imagem 3 (Opcional)" class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm">
+                            <input type="text" id="newImage4" placeholder="Imagem 4 (Opcional)" class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm">
+                            <input type="text" id="newImage5" placeholder="Imagem 5 (Opcional)" class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm">
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">URL da Imagem</label>
-                            <input type="text" id="newImage" class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white" placeholder="https://exemplo.com/imagem.jpg">
-                        </div>
+                        <p class="text-xs text-gray-400 mt-2">💡 Use caminhos como: ./images/posts/cronos-1.jpg ou URLs completas</p>
                     </div>
                     
                     <div class="flex space-x-4">
                         <button onclick="addPost()" class="bg-yellow-600 text-black px-6 py-2 rounded-lg hover:bg-yellow-700 transition-colors font-medium">
-                            Salvar
+                            Salvar Postagem
                         </button>
                         <button onclick="clearForm()" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors">
-                            Cancelar
+                            Limpar Campos
                         </button>
                     </div>
                 </div>
@@ -138,16 +235,24 @@
         </div>
 
         <!-- Posts Container -->
-        <div id="postsContainer" class="space-y-6">
+        <div id="postsContainer" class="space-y-8">
             <!-- Posts will be loaded here -->
         </div>
 
         <!-- Empty State -->
         <div id="emptyState" class="text-center py-12 hidden">
             <div class="text-6xl mb-4">🚗</div>
-            <p class="text-gray-400 text-lg">Nenhuma postagem encontrada</p>
+            <p class="text-gray-400 text-lg" id="emptyMessage">Nenhuma postagem encontrada</p>
         </div>
     </main>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal hidden">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <button class="modal-nav modal-prev" onclick="prevImage()">‹</button>
+        <button class="modal-nav modal-next" onclick="nextImage()">›</button>
+        <img id="modalImage" src="" alt="">
+    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-900 border-t border-gray-800 py-8 mt-16">
@@ -155,11 +260,11 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                     <div class="flex items-center space-x-3 mb-4">
-                     <img 
-    src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=40&h=40&fit=crop&auto=format" 
-    alt="Gire a Chave" 
-    class="w-10 h-10 rounded-full"
-/>
+                        <img 
+                            src="./images/logos/logo.png" 
+                            alt="Gire a Chave" 
+                            class="w-10 h-10 rounded"
+                        />
                         <h3 id="footerTitle" class="text-xl font-bold text-yellow-400">Gire a Chave</h3>
                     </div>
                     <p id="footerDescription" class="text-gray-400">Seu portal especializado em veículos comerciais com as melhores informações do mercado automotivo.</p>
@@ -192,6 +297,9 @@
         let currentLanguage = 'pt';
         let selectedCategory = 'all';
         let isAdmin = false;
+        let currentModal = { postId: null, imageIndex: 0 };
+
+        // NOVA ESTRUTURA: Array de imagens por post
         let posts = [
             {
                 id: 1,
@@ -206,7 +314,32 @@
                     es: 'El Fiat Cronos 2025 llega al mercado con importantes actualizaciones que lo convierten en una excelente opción para flotas comerciales. Con motor 1.3 Firefly más eficiente, consumo promedio de 15,2 km/l en ciudad y 16,8 km/l en carretera, ofrece ahorro real para empresas. El maletero de 525 litros y el amplio espacio interior garantizan practicidad para uso comercial. Precio sugerido desde R$ 89.990 para la versión Drive.'
                 },
                 category: 'carros',
-                image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&h=400&fit=crop',
+                images: [
+                    'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&h=400&fit=crop'
+                ],
+                date: new Date().toLocaleDateString()
+            },
+            {
+                id: 2,
+                title: {
+                    pt: 'Honda CB 600F Hornet 2025: Nova Geração para Delivery',
+                    en: 'Honda CB 600F Hornet 2025: New Generation for Delivery',
+                    es: 'Honda CB 600F Hornet 2025: Nueva Generación para Delivery'
+                },
+                content: {
+                    pt: 'A nova Honda CB 600F Hornet 2025 chega renovada com foco no mercado de delivery e transporte urbano. Motor de 599cc refrigerado a líquido, consumo de 22 km/l, freios ABS e painel digital completo. Ideal para motoboys profissionais que precisam de confiabilidade e economia. Preço promocional de lançamento por R$ 42.900.',
+                    en: 'The new Honda CB 600F Hornet 2025 arrives renewed with a focus on the delivery and urban transport market. 599cc liquid-cooled engine, consumption of 22 km/l, ABS brakes and complete digital panel. Ideal for professional motorcycle couriers who need reliability and economy. Launch promotional price for R$ 42,900.',
+                    es: 'La nueva Honda CB 600F Hornet 2025 llega renovada con enfoque en el mercado de delivery y transporte urbano. Motor de 599cc refrigerado por líquido, consumo de 22 km/l, frenos ABS y panel digital completo. Ideal para motomensajeros profesionales que necesitan confiabilidad y economía. Precio promocional de lanzamiento por R$ 42.900.'
+                },
+                category: 'motos',
+                images: [
+                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&h=400&fit=crop'
+                ],
                 date: new Date().toLocaleDateString()
             }
         ];
@@ -222,7 +355,8 @@
                 cars: 'Carros',
                 motorcycles: 'Motos',
                 trucks: 'Caminhões',
-                buses: 'Ônibus'
+                buses: 'Ônibus',
+                emptyMessage: 'Nenhuma postagem encontrada'
             },
             en: {
                 title: 'Turn the Key',
@@ -233,7 +367,8 @@
                 cars: 'Cars',
                 motorcycles: 'Motorcycles',
                 trucks: 'Trucks',
-                buses: 'Buses'
+                buses: 'Buses',
+                emptyMessage: 'No posts found'
             },
             es: {
                 title: 'Gira la Llave',
@@ -244,7 +379,8 @@
                 cars: 'Coches',
                 motorcycles: 'Motos',
                 trucks: 'Camiones',
-                buses: 'Autobuses'
+                buses: 'Autobuses',
+                emptyMessage: 'No se encontraron publicaciones'
             }
         };
 
@@ -262,19 +398,16 @@
             document.getElementById('blogSubtitle').textContent = t.subtitle;
             document.getElementById('adminToggle').textContent = t.admin;
             document.getElementById('categoriesTitle').textContent = t.categories;
+            document.getElementById('emptyMessage').textContent = t.emptyMessage;
             
             // Update language buttons
-            document.getElementById('langPt').className = currentLanguage === 'pt' ? 
-                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-black text-yellow-400' :
-                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-yellow-500 text-black hover:bg-yellow-600';
-            
-            document.getElementById('langEn').className = currentLanguage === 'en' ? 
-                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-black text-yellow-400' :
-                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-yellow-500 text-black hover:bg-yellow-600';
-            
-            document.getElementById('langEs').className = currentLanguage === 'es' ? 
-                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-black text-yellow-400' :
-                'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-yellow-500 text-black hover:bg-yellow-600';
+            ['langPt', 'langEn', 'langEs'].forEach((id, index) => {
+                const langs = ['pt', 'en', 'es'];
+                const button = document.getElementById(id);
+                button.className = currentLanguage === langs[index] ? 
+                    'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-black text-yellow-400' :
+                    'px-3 py-1 rounded-full text-sm font-medium transition-colors bg-yellow-500 text-black hover:bg-yellow-600';
+            });
             
             // Update category buttons
             document.getElementById('catAll').textContent = t.allVehicles;
@@ -296,6 +429,21 @@
         }
 
         function addPost() {
+            // Collect image URLs (only non-empty ones)
+            const images = [];
+            for (let i = 1; i <= 5; i++) {
+                const imageUrl = document.getElementById(`newImage${i}`).value.trim();
+                if (imageUrl) {
+                    images.push(imageUrl);
+                }
+            }
+
+            // Require at least 1 image
+            if (images.length === 0) {
+                alert('Por favor, adicione pelo menos 1 imagem!');
+                return;
+            }
+
             const newPost = {
                 id: Date.now(),
                 title: {
@@ -309,7 +457,7 @@
                     es: document.getElementById('newContentEs').value
                 },
                 category: document.getElementById('newCategory').value,
-                image: document.getElementById('newImage').value || 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&h=400&fit=crop',
+                images: images, // Array de imagens
                 date: new Date().toLocaleDateString()
             };
             
@@ -325,7 +473,10 @@
             document.getElementById('newContentPt').value = '';
             document.getElementById('newContentEn').value = '';
             document.getElementById('newContentEs').value = '';
-            document.getElementById('newImage').value = '';
+            // Clear all image fields
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`newImage${i}`).value = '';
+            }
         }
 
         // Category filter functions
@@ -348,7 +499,69 @@
             renderPosts();
         }
 
-        // Render posts
+        // Gallery functions
+        function changeMainImage(postId, imageIndex) {
+            const mainImg = document.getElementById(`mainImg-${postId}`);
+            const post = posts.find(p => p.id === postId);
+            const thumbs = document.querySelectorAll(`[data-post="${postId}"][data-thumb]`);
+            
+            if (post && post.images[imageIndex]) {
+                mainImg.src = post.images[imageIndex];
+                
+                // Update thumb active state
+                thumbs.forEach((thumb, index) => {
+                    thumb.classList.toggle('active', index === imageIndex);
+                });
+            }
+        }
+
+        function openModal(postId, imageIndex) {
+            const post = posts.find(p => p.id === postId);
+            if (post && post.images[imageIndex]) {
+                currentModal = { postId, imageIndex };
+                document.getElementById('modalImage').src = post.images[imageIndex];
+                document.getElementById('imageModal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function prevImage() {
+            const post = posts.find(p => p.id === currentModal.postId);
+            if (post) {
+                currentModal.imageIndex = currentModal.imageIndex > 0 ? 
+                    currentModal.imageIndex - 1 : 
+                    post.images.length - 1;
+                document.getElementById('modalImage').src = post.images[currentModal.imageIndex];
+            }
+        }
+
+        function nextImage() {
+            const post = posts.find(p => p.id === currentModal.postId);
+            if (post) {
+                currentModal.imageIndex = currentModal.imageIndex < post.images.length - 1 ? 
+                    currentModal.imageIndex + 1 : 
+                    0;
+                document.getElementById('modalImage').src = post.images[currentModal.imageIndex];
+            }
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'ArrowLeft') {
+                prevImage();
+            } else if (e.key === 'ArrowRight') {
+                nextImage();
+            }
+        });
+
+        // Render posts with gallery
         function renderPosts() {
             const filteredPosts = selectedCategory === 'all' ? posts : posts.filter(post => post.category === selectedCategory);
             const container = document.getElementById('postsContainer');
@@ -362,58 +575,74 @@
             
             emptyState.classList.add('hidden');
             
-            container.innerHTML = filteredPosts.map(post => `
-                <article class="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden hover:border-yellow-400 transition-colors">
-                    <img 
-                        src="${post.image}" 
-                        alt="${post.title[currentLanguage]}" 
-                        class="w-full h-48 object-cover"
-                    />
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="bg-yellow-600 text-black px-3 py-1 rounded-full text-sm font-medium">
-                                ${getCategoryName(post.category)}
-                            </span>
-                            <span class="text-gray-400 text-sm">${post.date}</span>
+            container.innerHTML = filteredPosts.map(post => {
+                const mainImage = post.images[0];
+                const hasMultipleImages = post.images.length > 1;
+                
+                return `
+                    <article class="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden hover:border-yellow-400 transition-all duration-300">
+                        <!-- Gallery Section -->
+                        <div class="gallery-container">
+                            <img 
+                                id="mainImg-${post.id}"
+                                src="${mainImage}" 
+                                alt="${post.title[currentLanguage]}" 
+                                class="gallery-main"
+                                onclick="openModal(${post.id}, 0)"
+                            />
+                            ${hasMultipleImages ? `
+                                <div class="gallery-thumbs px-6 pb-4">
+                                    ${post.images.map((img, index) => `
+                                        <img 
+                                            src="${img}" 
+                                            alt="Imagem ${index + 1}"
+                                            class="gallery-thumb ${index === 0 ? 'active' : ''}"
+                                            data-post="${post.id}"
+                                            data-thumb="${index}"
+                                            onclick="changeMainImage(${post.id}, ${index})"
+                                        />
+                                    `).join('')}
+                                </div>
+                            ` : ''}
                         </div>
-                        <h2 class="text-xl font-bold text-white mb-3 hover:text-yellow-400 transition-colors">
-                            ${post.title[currentLanguage]}
-                        </h2>
-                        <p class="text-gray-300 leading-relaxed">
-                            ${post.content[currentLanguage]}
-                        </p>
-                        ${isAdmin ? `
-                        <div class="mt-4 flex space-x-2">
-                            <button onclick="deletePost(${post.id})" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
-                                Excluir
-                            </button>
+                        
+                        <!-- Content Section -->
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-yellow-600 text-black px-3 py-1 rounded-full text-sm font-medium">
+                                    ${getCategoryName(post.category)}
+                                </span>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-gray-400 text-sm">${post.date}</span>
+                                    <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">
+                                        ${post.images.length} ${post.images.length === 1 ? 'imagem' : 'imagens'}
+                                    </span>
+                                </div>
+                            </div>
+                            <h2 class="text-xl font-bold text-white mb-3 hover:text-yellow-400 transition-colors">
+                                ${post.title[currentLanguage]}
+                            </h2>
+                            <p class="text-gray-300 leading-relaxed">
+                                ${post.content[currentLanguage]}
+                            </p>
+                            ${isAdmin ? `
+                            <div class="mt-4 flex space-x-2">
+                                <button onclick="deletePost(${post.id})" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition-colors">
+                                    Excluir
+                                </button>
+                            </div>
+                            ` : ''}
                         </div>
-                        ` : ''}
-                    </div>
-                </article>
-            `).join('');
+                    </article>
+                `;
+            }).join('');
         }
 
         function getCategoryName(category) {
             const categoryNames = {
-                pt: {
-                    carros: 'Carros',
-                    motos: 'Motos', 
-                    caminhoes: 'Caminhões',
-                    onibus: 'Ônibus'
-                },
-                en: {
-                    carros: 'Cars',
-                    motos: 'Motorcycles',
-                    caminhoes: 'Trucks', 
-                    onibus: 'Buses'
-                },
-                es: {
-                    carros: 'Coches',
-                    motos: 'Motos',
-                    caminhoes: 'Camiones',
-                    onibus: 'Autobuses'
-                }
+                pt: { carros: 'Carros', motos: 'Motos', caminhoes: 'Caminhões', onibus: 'Ônibus' },
+                en: { carros: 'Cars', motos: 'Motorcycles', caminhoes: 'Trucks', onibus: 'Buses' },
+                es: { carros: 'Coches', motos: 'Motos', caminhoes: 'Camiones', onibus: 'Autobuses' }
             };
             
             return categoryNames[currentLanguage][category] || category;
